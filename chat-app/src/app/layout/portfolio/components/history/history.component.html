@@ -1,0 +1,40 @@
+<div class="mb-5">
+    <div class="element-wrapper bg">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Trade Hash</th>
+                        <th>Date/Time</th>
+                        <th>Seller's Address</th>
+                        <th>Buyer's Address</th>
+                        <th>Arbitrator's Address</th>
+                        <th>Eth Quantity</th>
+                        <th>Fiat Quantity</th>
+                        <th>Price</th>
+                        <th>Arbitrator Fees</th>
+                        <th>Payment Method Used</th>
+                        <th>Offer Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody style="max-height:35vh;">
+                    <tr *ngFor="let offer of offerDetails">
+                        <td>{{offer.tradeHash}}</td>
+                        <td>{{offer.dateTime}}</td>
+                        <td>{{offer.sellerAddress}}</td>
+                        <td>{{offer.buyerAddress}}</td>
+                        <td>{{offer.arbitratorAddress}}</td>
+                        <td>{{web3.fromWei(offer.ethQuantity,'ether')}} ETH</td>
+                        <td>{{offer.fiatQuantity}} {{offer.fiatCurrency}}</td>
+                        <td>{{offer.price}} {{offer.fiatCurrency}}</td>
+                        <td>{{web3.fromWei(offer.arbitratorFee,'ether')}} ETH</td>
+                        <td>{{offer.paymentMethod}}</td>
+                        <td>{{offer.offerType}}</td>
+                        <td>{{offer.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

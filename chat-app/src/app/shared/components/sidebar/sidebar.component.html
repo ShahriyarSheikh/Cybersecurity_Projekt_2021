@@ -1,0 +1,181 @@
+<!--------------------
+      START - Mobile Menu
+      -------------------->
+
+<div class="menu-mobile menu-activated-on-click color-scheme-dark">
+    <div class="mm-logo-buttons-w">
+        <a class="mm-logo" routerLink="">
+            <img src="./assets/img/temp-logo@2x.png" alt="logo" />
+        </a>
+        <div class="mm-buttons">
+            <div class="mobile-menu-trigger" (click)="menuToggle()">
+                <div class="os-icon os-icon-hamburger-menu-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-and-user" style="display: block;">
+
+        <!--------------------
+          START - Mobile Menu List
+          -------------------->
+        <ul class="main-menu" (click)="menuToggle()">
+            <li class="has-sub-menu">
+                <a routerLink="" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                    <div class="icon-w">
+                        <div class="icon-de-dashboard"></div>
+                    </div>
+                    <span>Market</span>
+                </a>
+            </li>
+            <li class="has-sub-menu">
+                <a routerLink="/buy" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="icon-de-buy-icon"></div>
+                    </div>
+                    <span>Buy ETH</span>
+                </a>
+            </li>
+            <li class="has-sub-menu">
+                <a routerLink="/sell" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="icon-de-sell-icon"></div>
+                    </div>
+                    <span>Sell ETH</span>
+                </a>
+            </li>
+            <li class="has-sub-menu">
+                <a routerLink="/portfolio" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="icon-de-portfolio-icon"></div>
+                    </div>
+                    <span>Portfolio</span>
+                </a>
+            </li>
+            <!-- <li class="has-sub-menu">
+                <a routerLink="/funds" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="icon-de-fund-icon"></div>
+                    </div>
+                    <span>Fund</span>
+                </a>
+            </li> -->
+            <li class="has-sub-menu">
+                <a routerLink="/accounts" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="fa fa-user"></div>
+                    </div>
+                    <span>Account</span>
+                </a>
+            </li>
+            <li class="has-sub-menu">
+                <a class="email">
+                    <div class="icon-w">
+                        <div class="icon-de-email"></div><span *ngIf="totalCount != 0" class="count">{{totalCount}}</span>
+                    </div>
+                    <span>Support</span>
+                </a>
+            </li>
+            <!-- <li class="has-sub-menu">
+                <a routerLink="/settings" [routerLinkActive]="['active']">
+                    <div class="icon-w">
+                        <div class="icon-de-setting"></div>
+                    </div>
+                    <span>Setting</span>
+                </a>
+            </li> -->
+
+        </ul>
+        <!--------------------
+          END - Mobile Menu List
+          -------------------->
+    </div>
+</div>
+<!--------------------
+      END - Mobile Menu
+      -------------------->
+
+<!--------------------
+      START - Main Menu
+      -------------------->
+<div class="menu-w color-scheme-dark color-style-transparent menu-position-side menu-side-left menu-layout-mini sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
+    <div class="logo-w">
+        <a class="logo" routerLink="">
+            <div class="logo-element">
+                <img src="./assets/img/temp-logo@2x.png" alt="logo" />
+            </div>
+        </a>
+    </div>
+    <ul class="main-menu">
+        <li class="selected has-sub-menu">
+            <a routerLink="" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                <div class="icon-w">
+                    <div class="icon-de-dashboard"></div>
+                </div>
+            </a>
+        </li>
+        <li class=" has-sub-menu">
+            <a routerLink="/buy" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-buy-icon"></div>
+                </div>
+            </a>
+        </li>
+        <li class="has-sub-menu">
+            <a routerLink="/sell" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-sell-icon"></div>
+                </div>
+            </a>
+        </li>
+        <li class=" has-sub-menu">
+            <a routerLink="/portfolio" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-portfolio-icon"></div>
+                </div>
+            </a>
+        </li>
+        <!-- <li class=" has-sub-menu">
+            <a routerLink="/funds" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-fund-icon"></div>
+                </div>
+            </a>
+        </li> -->
+        <li class="has-sub-menu">
+            <a routerLink="/accounts" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="fa fa-user"></div>
+                </div>
+            </a>
+        </li>
+        <li class=" has-sub-menu">
+            <a class="email">
+                <div class="icon-w">
+                    <div class="icon-de-email"></div><span *ngIf="totalCount != 0" class="count">{{totalCount}}</span>
+                </div>
+            </a>
+        </li>
+        <!-- <li class=" has-sub-menu">
+            <a routerLink="/settings" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-setting"></div>
+                </div>
+            </a>
+        </li> -->
+
+        <li class=" has-sub-menu">
+            <a routerLink="/marketplacedemo" [routerLinkActive]="['active']">
+                <div class="icon-w">
+                    <div class="icon-de-fund-icon"></div>
+                </div>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<app-messages></app-messages>
+
+<!--------------------
+      END - Main Menu
+      -------------------->

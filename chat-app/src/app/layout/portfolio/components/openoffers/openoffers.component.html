@@ -1,0 +1,152 @@
+<div class="mb-5">
+    <div class="element-wrapper bg">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Price</th>
+                        <th>ETH(min-max)</th>
+                        <th>Amount(min-max)</th>
+                        <th>Offer Type</th>
+                        <th>Enabled</th>
+                    </tr>
+                </thead>
+                <tbody style="max-height:35vh;">
+                    <tr *ngFor="let offer of offerDetails; let i = index">
+                        <td>{{offer.fiatQuantity / web3.fromWei(offer.ethQuantity,'ether')}} {{offer.fiatCurrency}}</td>
+                        <td>{{web3.fromWei(offer.ethQuantity,'ether')}} ETH</td>
+                        <td>{{offer.fiatQuantity}} {{offer.fiatCurrency}}</td>
+                        <td>{{offer.offerType}}</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr *ngIf="offerDetails.length == 0">
+                        <td colspan="5">No records found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="mb-5">
+    <div class="element-wrapper bg">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Offer ID</th>
+                        <th>Date/Time</th>
+                        <th>Market</th>
+                        <th>Price</th>
+                        <th>BTC(min-max)</th>
+                        <th>Amount(min-max)</th>
+                        <th>Offer Type</th>
+                        <th>Enabled</th>
+                    </tr>
+                </thead>
+                <tbody style="max-height:35vh;">
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>009789541245</td>
+                        <td>May 28, 2018 2:40:29 PM</td>
+                        <td>763.00</td>
+                        <td>7491.3200</td>
+                        <td>0.05 - 0.15</td>
+                        <td>150 - 250</td>
+                        <td>Sell BTC</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->

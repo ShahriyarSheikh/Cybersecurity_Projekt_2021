@@ -1,0 +1,39 @@
+<h2 class="element-header">
+    Funds
+</h2>
+<div class="os-tabs-controls">
+    <ul class="nav nav-tabs bigger">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tab_recieve_fund">Recieve Funds</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_send_fund">Send Funds</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_reserved_fund">Reserved Funds</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_locked_fund">Locked Funds</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_transactions">Transactions</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_recieve_fund">
+        <app-receivefunds></app-receivefunds>
+    </div>
+    <div class="tab-pane" id="tab_send_fund">
+        <app-sendfunds></app-sendfunds>
+    </div>
+    <div class="tab-pane" id="tab_reserved_fund">
+        <app-reservedfunds></app-reservedfunds>
+    </div>
+    <div class="tab-pane" id="tab_locked_fund">
+        <app-lockedfunds></app-lockedfunds>
+    </div>
+    <div class="tab-pane" id="tab_transactions">
+        <app-transactions></app-transactions>
+    </div>
+</div>

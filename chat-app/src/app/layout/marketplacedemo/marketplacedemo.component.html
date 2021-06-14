@@ -1,0 +1,53 @@
+<div class="mb-5">
+  <h6 class="element-header">
+    Place Order For A Product Or Service
+  </h6>
+  <div class="element-wrapper bg">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <div class="form-group">
+            <label>Category</label>
+            <select class="form-control" [(ngModel)]="category">
+              <option [value]="Service">Service</option>
+              <option [value]="Product">Product</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" type="text" [(ngModel)]='title'>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" type="text" [(ngModel)]='description'>
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input class="form-control" type="text" [(ngModel)]='location'>
+          </div>
+          <div class="form-group">
+            <label>Eth Quantity</label>
+            <input class="form-control" type="text" [(ngModel)]='ethQuantity'>
+          </div>
+          <div class="form-group">
+            <label>Duration</label>
+            <input class="form-control" type="text" [(ngModel)]='expiry' placeholder="Leave this field empty if the category is set to product.">
+          </div>
+          <div class="form-group">
+            <label>Select Arbitrator</label>
+            <select class="form-control" [(ngModel)]="arbitratorAddress">
+              <option *ngFor="let arbitrator of arbitratorList" [value]="arbitrator">{{arbitrator}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="element-box-content d-flex">
+          <button class="mr-2 btn btn-blue" (click)="placeProductOfferInContract()" type="button">Place Offer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

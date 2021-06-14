@@ -1,0 +1,20 @@
+<h2 class="element-header">Sell ETH</h2>
+<div class="os-tabs-controls">
+    <ul class="nav nav-tabs bigger">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tab_sell_biycoin">Sell Ethereum</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_sell_create_offer" #createOffer>Create Offer</a>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_sell_biycoin">
+        <app-sellorders (activateCreateOfferTab)="createOffer.click()"></app-sellorders>
+    </div>
+    <div class="tab-pane" id="tab_sell_create_offer">
+        <app-selloffer></app-selloffer>
+    </div>
+</div>

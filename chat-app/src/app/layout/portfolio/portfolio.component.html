@@ -1,0 +1,27 @@
+<h2 class="element-header">
+    Portfolio
+</h2>
+<div class="os-tabs-controls">
+    <ul class="nav nav-tabs bigger">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tab_my_open_offers">My Untaken Offers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_open_trades">My Ongoing Offers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab_history">My Offer's History</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_my_open_offers">
+        <app-openoffers></app-openoffers>
+    </div>
+    <div class="tab-pane" id="tab_open_trades">
+        <app-opentrades></app-opentrades>
+    </div>
+    <div class="tab-pane" id="tab_history">
+        <app-history></app-history>
+    </div>
+</div>

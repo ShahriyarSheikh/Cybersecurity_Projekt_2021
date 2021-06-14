@@ -1,0 +1,89 @@
+<div class="full-chat-w cus-mail-list">
+    <div class="full-chat-i">
+        <div class="full-chat-left">
+            <div class="chat-list-wrap">
+                <div class="full-chat-head">
+                    <h3>Messages</h3>
+                    <a>
+                        <i class="icon-de-close"></i>
+                    </a>
+                </div>
+                <div class="ae-list user-list">
+                    <div class="user-w" *ngFor="let key of peersDiscovered | keys" (click)="startChat(key)">
+                        <div class="avatar with-status status-green">
+                            <img alt="" src="./assets/img/avatar1.jpg">
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name">
+                                {{peersDiscovered[key].name || 'Anonymous'}}
+                                <span style="color:yellow" *ngIf="peersDiscovered[key].unreadCount > 0">({{peersDiscovered[key].unreadCount}})</span>
+                            </div>
+                            <div class="last-message">
+                                <!-- {{peersDiscovered[key]?.chatHistory.length - 1]?.msg | truncate:30}} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="conversion-wrap" [style.display]="isChatOpen ? 'block':'none'">
+                <div class="full-chat-middle" *ngIf="currentPeer">
+                    <div class="full-chat-head">
+                        <div class="user-w">
+                            <a (click)="closeChat()" class="mr-3">
+                                <i class="icon-de-pev"></i>
+                            </a>
+                            <div class="avatar with-status status-green">
+                                <img alt="" src="./assets/img/avatar1.jpg">
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">
+                                    {{peersDiscovered[currentPeer].name || 'Anonymous'}}
+                                </div>
+                                <div class="last-message">
+                                    {{peersDiscovered[currentPeer].status == 'online' ? 'Online' : 'Offline'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ae-list chat-content-w" #chatWrapper>
+                        <div class="chat-content">
+                            <div class="chat-message" [ngClass]="{'self': chat.type == 'out'}" *ngFor="let chat of peersDiscovered[currentPeer].chatHistory">
+                                <ng-container *ngIf="chat.type == 'in'">
+                                    <div class="chat-message-content-w">
+                                        <div class="chat-message-content">
+                                            {{chat.msg}}
+                                        </div>
+                                    </div>
+                                    <div class="chat-message-avatar">
+                                        <img alt="" src="./assets/img/avatar3.jpg">
+                                    </div>
+                                    <!-- <div class="chat-message-date">
+                                        {{chat.dateTime | date:'short'}}
+                                    </div> -->
+                                </ng-container>
+                                <ng-container *ngIf="chat.type == 'out'">
+                                    <div class="chat-message-content-w">
+                                        <div class="chat-message-content">
+                                            {{chat.msg}}
+                                        </div>
+                                    </div>
+                                    <!-- <div class="chat-message-date">
+                                        {{chat.dateTime | date:'short'}}
+                                    </div> -->
+                                    <div class="chat-message-avatar">
+                                        <img alt="" src="./assets/img/avatar1.jpg">
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" chat-controls">
+                        <div class="chat-input">
+                            <input [(ngModel)]="currentMessage" (keyup.enter)="sendMsg()" placeholder="Type your message here..." type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

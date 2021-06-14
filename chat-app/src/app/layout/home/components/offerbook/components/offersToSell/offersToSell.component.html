@@ -1,0 +1,26 @@
+<div class="element-wrapper pb-0">
+    <h6 class="element-header">
+        Sell Offers
+    </h6>
+    <div class="element-box-tp">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableSmall">
+                <thead>
+                    <tr>
+                        <th>Price in fiat</th>
+                        <th>Amount in ETH</th>
+                        <th>Amount in fiat</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="sellOfferDetails.length > 0">
+                    <tr *ngFor="let offer of sellOfferDetails; let i = index">
+                        <td>{{offer.fiatQuantity / web3.fromWei(offer.ethQuantity,'ether')}} {{offer.fiatCurrency}}</td>
+                        <td>{{web3.fromWei(offer.ethQuantity,'ether')}} ETH</td>
+                        <td>{{offer.fiatQuantity}} {{offer.fiatCurrency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="mt-4 btn btn-buy" routerLink="/sell" type="button">Sell Ethereum for fiat</button>
+</div>

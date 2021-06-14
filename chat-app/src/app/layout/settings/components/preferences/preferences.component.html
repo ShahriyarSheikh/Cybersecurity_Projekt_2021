@@ -1,0 +1,184 @@
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            General Prefrences
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for=""> Select Base Currency</label>
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>New York</option>
+                                <option>California</option>
+                                <option>Boston</option>
+                                <option>Texas</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for=""> Language</label>
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>New York</option>
+                                <option>California</option>
+                                <option>Boston</option>
+                                <option>Texas</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for=""> Country</label>
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>New York</option>
+                                <option>California</option>
+                                <option>Boston</option>
+                                <option>Texas</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for=""> Bitcoin Block Explorer</label>
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>New York</option>
+                                <option>California</option>
+                                <option>Boston</option>
+                                <option>Texas</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group d-il">
+                            <label for=""> Withdrawl Transaction Fee (Satoshi/Byte)</label>
+                            <input class="form-control" placeholder="Type here" type="text">
+
+                        </div>
+                        <div class="cus-check-before d-il">
+                            <input class="styled-checkbox" id="custom-value" type="checkbox" value="value1">
+                            <label for="custom-value">Use custom value</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""> Max. Deviation From Market Price</label>
+                            <input class="form-control" placeholder="Password" type="password">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""> Ignore Peers with Onion Address (Comma Sep.)</label>
+                            <input class="form-control" placeholder="Password" type="password">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="cus-check-before">
+                            <input class="styled-checkbox" id="aritrators" type="checkbox" value="value1">
+                            <label for="aritrators">Auto Select Arbitrators</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Currency in Market Price Feed List
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""> Preferred Currency</label>
+                            <select class="form-control">
+                                <option>Select State</option>
+                                <option>New York</option>
+                                <option>California</option>
+                                <option>Boston</option>
+                                <option>Texas</option>
+                                <option>Colorado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""> Add National Currency</label>
+                            <select class="form-control" onchange="selectIngredient(this);">
+                                <option value="us_dollar">US Dollar (USD)</option>
+                                <option value="austrailian">Austrailian Dollar (AUD)</option>
+                                <option value="british_pound">British Pound Sterling (GBP)</option>
+                                <option value="canadian_dollar">Canadian Dollar (CAD)</option>
+                            </select>
+
+                            <ul class="select-tags">
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for=""> Add National Currency</label>
+                            <select class="form-control" onchange="selectIngredient(this);">
+                                <option value="dash">Dash (DASH)</option>
+                                <option value="decred">Decred (DCR)</option>
+                                <option value="bp_sterling">British Pound Sterling (GBP)</option>
+                                <option value="deeponion">DeepOnion (ONION)</option>
+                            </select>
+
+                            <ul class="select-tags">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Display Options
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="cus-check-before">
+                            <input class="styled-checkbox" id="offer-book" type="checkbox" value="value1">
+                            <label for="offer-book">Show My Own Offers in Offer Book</label>
+                        </div>
+                        <div class="cus-check-before">
+                            <input class="styled-checkbox" id="use-animation" type="checkbox" value="value1">
+                            <label for="use-animation">Use Animations</label>
+                        </div>
+                        <div class="cus-check-before">
+                            <input class="styled-checkbox" id="offer-trades" type="checkbox" value="value1">
+                            <label for="offer-trades">Sort Market Lists with No. of Offers/trades</label>
+                        </div>
+                        <button class="mt-4 btn btn-sell" type="button"> Reset All “Don’t Show Again” Flags</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="search-filter mb-5">
+    <!-- <div class="filter_option">
+        <div class="btn-group">
+            <label>Currency</label>
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton6"
+                type="button">US Dollar (USD) - 10 offers</button>
+            <div aria-labelledby="dropdownMenuButton6" class="dropdown-menu">
+                <div class="scrollbar scrollbar-primary">
+                    <div class="force-overflow">
+                        <a class="dropdown-item" href="#"> Action</a>
+                        <a class="dropdown-item" href="#"> Another action</a>
+                        <a class="dropdown-item" href="#"> Something else here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group pay-method">
+            <label>Payment Method</label>
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton6"
+                type="button">Show All</button>
+            <div aria-labelledby="dropdownMenuButton6" class="dropdown-menu">
+                <div class="scrollbar scrollbar-primary">
+                    <div class="force-overflow">
+                        <a class="dropdown-item" href="#"> Action</a>
+                        <a class="dropdown-item" href="#"> Another action</a>
+                        <a class="dropdown-item" href="#"> Something else here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="record_wrap">
+        <p>No of Offers:
+            <span>{{buyOfferDetails.length}}</span>
+            <button class="btn" (click)="LoadContract()">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </p>
+    </div>
+</div>
+<div class="element-wrapper pb-0">
+    <div class="element-box-tp">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Price in fiat for 1 ETH</th>
+                        <th>ETH (min - max)</th>
+                        <th>Fiat (min - max)</th>
+                        <th>Payment Method</th>
+                        <th>I Want To</th>
+                        <th>Users</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="buyOfferDetails.length > 0">
+                    <tr *ngFor="let offer of buyOfferDetails; let i = index">
+                        <td>{{offer.fiatQuantity / web3.fromWei(offer.ethQuantity,'ether')}} {{offer.fiatCurrency}}</td>
+                        <td>{{web3.fromWei(offer.ethQuantity,'ether')}} ETH</td>
+                        <td>{{offer.fiatQuantity}} {{offer.fiatCurrency}}</td>
+                        <td>
+                            <a href="#" class="tbl-link">{{offer.paymentMethod}}</a>
+                        </td>
+                        <td>
+                            <button (click)="takeBuyOffer(offer)" class="btn sell-btn-tbl" type="button">Take this!
+                                <span class="icon-de-top-icon"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <div class="avatar-w tbl-avatar">
+                                <img alt="" src="./assets/img/avatar1.jpg">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="mt-4 btn btn-sell tbl-sell-btn" (click)="activateCreateOfferTab.emit()" type="button"> Create new offer</button>
+</div>

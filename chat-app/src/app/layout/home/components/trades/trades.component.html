@@ -1,0 +1,90 @@
+<div class="element-wrapper pb-0">
+    <div class="chart-box">
+        <div class="currency_chart">
+            <div class="filter_option">
+                <!-- <div class="btn-group">
+                    <label>Currency</label>
+                    <select class="form-control select-transparent" (change)="changeCurrencyOrTimePeriod()" [(ngModel)]="selectedCurrency">
+                        <option *ngFor="let val of currencies" [value]="val">{{val}}</option>
+                    </select>
+                </div> -->
+            </div>
+            <div class="currency_title">
+                <div class="os-tabs-controls">
+                    <ul class="nav nav-tabs chart_tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'tenMinBlocks'}" (click)="blockTimePeriod = 'tenMinBlocks';changeCurrencyOrTimePeriod()">10Min</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'oneHourBlocks'}" (click)="blockTimePeriod = 'oneHourBlocks';changeCurrencyOrTimePeriod()">1H</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'oneDayBlocks'}" (click)="blockTimePeriod = 'oneDayBlocks';changeCurrencyOrTimePeriod()">24H</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'oneWeekBlocks'}" (click)="blockTimePeriod = 'oneWeekBlocks';changeCurrencyOrTimePeriod()">1W</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'oneMonthBlocks'}" (click)="blockTimePeriod = 'oneMonthBlocks';changeCurrencyOrTimePeriod()">1M</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': blockTimePeriod == 'oneYearBlocks'}" (click)="blockTimePeriod = 'oneYearBlocks';changeCurrencyOrTimePeriod()">1Y</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_minit">
+                <div class="el-chart-w mb-5">
+                    <h6 class="element-header">
+                        Price in fiat for 1 Eth
+                    </h6>
+                    <div id="chartContainerbtc" style="height: 300px; width: 100%;"></div>
+                </div>
+                <div class="el-chart-w mb-5">
+                    <h6 class="element-header">
+                        Volume in ETH
+                    </h6>
+                    <div id="chartContainerbar" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+            <div class="tab-pane active" id="tab_one_hour"></div>
+            <div class="tab-pane active" id="tab_twontyfour_hour"></div>
+            <div class="tab-pane active" id="tab_week"></div>
+            <div class="tab-pane active" id="tab_month"></div>
+            <div class="tab-pane active" id="tab_year"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="element-box-tp">
+    <h6 class="element-header">
+        Total Trades: {{completedOffersDetails.length}}
+    </h6>
+    <div class="table-responsive">
+
+        <table class="table cusTable cusTableBig">
+            <thead>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Price for 1 ETH</th>
+                    <th>Amount in ETH </th>
+                    <th>Amount in fait</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody style="max-height:35vh;">
+                <tr *ngFor="let item of completedOffersDetails">
+                    <td>{{item.dateTime}}</td>
+                    <td>{{item.fiatQuantity / web3.fromWei(item.ethQuantity,'ether')}} {{item.fiatCurrency}}</td>
+                    <td>{{web3.fromWei(item.ethQuantity,'ether')}}</td>
+                    <td>{{item.fiatQuantity}}</td>
+                    <td>{{item.paymentMethod}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

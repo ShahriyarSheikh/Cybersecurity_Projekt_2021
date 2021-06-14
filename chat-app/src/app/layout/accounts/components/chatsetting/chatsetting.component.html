@@ -1,0 +1,38 @@
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Chat settings
+        </h6>
+        <div class="element-wrapper bg">
+            <div class="row">
+                <div class="col-md-3">
+                    <input class="form-control" type="text" placeholder="Nick Name" [(ngModel)]="nickname">
+                </div>
+                <div class="col">
+                    <button (click)="saveNickName()" [disabled]="!nickname" class="btn buy-btn-tbl" type="button">Save nickname
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Matching Fees
+        </h6>
+        <div class="element-wrapper bg">
+            <div class="row">
+                <div class="col-md-3">
+                    <input class="form-control" type="text" placeholder="Amount of matching fees to deposit" [(ngModel)]="matchingFees">
+                </div>
+                <div class="col">
+                    <button (click)="depositMatchingFees()" [disabled]="!matchingFees" class="btn buy-btn-tbl" type="button">Deposit</button>
+                </div>
+                <div class="col">
+                    <span>Already Deposited Amount: {{web3.fromWei(alreadyDepositedAmount,'ether')}} DEX</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+<div class="mb-5">
+    <h6 class="element-header">
+        Take Buy Offer (I AM SELLER)
+    </h6>
+    <div class="element-wrapper bg" *ngIf="offer && !isOfferTaken">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Payment Methods</label>
+                    <input readonly class="form-control" [value]="offer.paymentMethod" type="text">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Fiat Currency</label>
+                    <input readonly class="form-control" [value]="offer.fiatCurrency" type="text">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Arbitrator Address</label>
+                    <input readonly class="form-control" [value]="offer.arbitratorAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Seller Address</label>
+                    <input readonly class="form-control" [value]="offer.sellerAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Buyer Address</label>
+                    <input readonly class="form-control" [value]="offer.buyerAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Eth Quantity</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="offer.ethQuantity" type="text">
+                        <div class="input-group-addon">
+                            ETH
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Fiat Quantity</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="offer.fiatQuantity" type="text">
+                        <div class="input-group-addon">
+                            {{offer.fiatCurrency}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Trade Hash</label>
+                    <input readonly class="form-control" [value]="offer.tradeHash" type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isOfferTaken">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Owner</label>
+                    <input readonly class="form-control" [value]="owner" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Arbitrator</label>
+                    <input readonly class="form-control" [value]="arbitratorAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Seller</label>
+                    <input readonly class="form-control" [value]="sellerAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Buyer</label>
+                    <input readonly class="form-control" [value]="buyerAddress" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Arbitrator Fees</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="web3.fromWei(arbitratorFees,'ether')" type="text">
+                        <div class="input-group-addon">
+                            ETH
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Trade Amount</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="web3.fromWei(offeredAmount,'ether')" type="text">
+                        <div class="input-group-addon">
+                            ETH
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Seller Deposited Amount</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="web3.fromWei(sellerAmountDeposit,'ether')" type="text">
+                        <div class="input-group-addon">
+                            ETH
+                        </div>
+                    </div>
+                    <a (click)="depositForSeller()" *ngIf="!isSellerDeposit" class="btn-link">Deposit into escrow</a>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Buyer Security Deposit</label>
+                    <div class="input-group">
+                        <input readonly class="form-control" [value]="web3.fromWei(buyerSecurityDeposit,'ether')" type="text">
+                        <div class="input-group-addon">
+                            ETH
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Is Buyer Agreeing</label>
+                    <input readonly class="form-control" [value]="isBuyerAgreeing ? 'Buyer is agreeing for seller':'Buyer is not agreeing for seller'" type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Is Seller Agreeing</label>
+                    <input readonly class="form-control" [value]="isSellerAgreeing ? 'Seller is agreeing for buyer':'Seller is not agreeing for buyer'" type="text">
+                    <a (click)="signerForSeller()" *ngIf="!isSellerAgreeing && !isBuyerAgreeing" class="btn-link">Sign for seller</a>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Is Arbitrator Agreeing For Buyer</label>
+                    <input readonly class="form-control" [value]="isArbitratorAgreeingForBuyer ? 'Arbitrator is agreeing for buyer' : 'Arbitrator is not agreeing for buyer'"
+                        type="text">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Is Arbitrator Agreeing For Seller</label>
+                    <input readonly class="form-control" [value]="isArbitratorAgreeingForSeller ? 'Arbitrator is agreeing for seller' : 'Arbitrator is not agreeing for seller'"
+                        type="text">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Buyer Sent The Fiat Amount</label>
+                    <input readonly class="form-control" [value]="buyerSentFiatAmount ? 'Yes':'No'" type="text">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Dispute Raised By Seller</label>
+                    <input readonly class="form-control" [value]="sellerDisputeRaise ? 'Yes':'No'" type="text">
+                    <a (click)="raiseDisputeForSeller()" *ngIf="!sellerDisputeRaise" class="btn-link">Raise dispute!</a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Dispute Raised By Buyer</label>
+                    <input readonly class="form-control" [value]="buyerDisputeRaise ? 'Yes':'No'" type="text">
+                </div>
+            </div>
+            <div class="col-sm-12"  *ngIf="!isTransactionSuccessful">
+                <button (click)="releaseFundsToSeller()" *ngIf="!fundsReleased" class="mt-4 btn btn-sell btn-fund">Try Release Funds From Escrow To Your Address!</button>
+            </div>
+            <div class="col-sm-12" *ngIf="isTransactionSuccessful">
+                <span>Transaction successful</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" *ngIf="offer && !isOfferTaken">
+    <div class="col-md-6">
+        <div class="element-box-content d-flex">
+            <button (click)="takeOffer()" class="mr-2 btn btn-blue" id="" type="button">Take Offer</button>
+            <button (click)="cancelTakingOffer()" class="btn btn-blue" type="button">Cancel</button>
+        </div>
+    </div>
+</div>

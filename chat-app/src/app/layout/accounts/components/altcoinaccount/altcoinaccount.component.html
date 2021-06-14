@@ -1,0 +1,101 @@
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Manage Accounts
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label> Your Altcoin Accounts</label>
+                            <table class="table cusTable cusTableBig" *ngIf="userSavedAltcoinAccounts.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Crypto Currency</th>
+                                        <th>Altcoin Address</th>
+                                        <th>Account Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of userSavedAltcoinAccounts">
+                                        <td>{{item.paymentMethod}}</td>
+                                        <td>{{item.altCoinAddress}}</td>
+                                        <td>{{item.accountName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="cus_box content-center" *ngIf="userSavedAltcoinAccounts.length == 0">
+                                <p>There are no accounts set up yet</p>
+                            </div>
+                        </div>
+                        <div class="element-box-content d-flex">
+                            <button class="mr-2 btn btn-blue" (click)="isCreateAccountForm = true" [disabled]="isCreateAccountForm" type="button"> Add New Account</button>
+                            <button class="mr-2 btn btn-blue" type="button" (click)="exportAllAccounts()"> Export Accounts</button>
+                            <button class="btn btn-blue" (click)="fileinput.click()" type="button"> Import Accounts</button>
+                            <div class="form-group">
+                                <!-- <label>Choose File</label> -->
+                                <input (change)="importAccount($event)" type="file" style="visibility :hidden " #fileinput >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mb-5" *ngIf="isCreateAccountForm">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Create New Account
+        </h6>
+        <div class="element-wrapper bg">
+            <form action="" class="mb-5" [formGroup]="altCoinForm" (ngSubmit)="saveAltCoinAccount()" method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>All Currencies</label>
+                            <select class="form-control" formControlName="paymentMethod" (change)="changePaymentMethod()">
+                                <option value="Bitcoin">Bitcoin</option>
+                                <option value="Ripple">Ripple</option>
+                                <option value="Verge">Verge</option>
+                                <option value="Tron">Tron</option>
+                                <option value="Cardano">Cardano</option>
+                                <option value="Stellar">Stellar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Altcoin Address</label>
+                                    <input class="form-control" placeholder="Altcoin Address" type="text" formControlName="altCoinAddress">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group d-il">
+                                    <label for=""> Account Name</label>
+                                    <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName" formControlName="accountName">
+                                </div>
+                                <div class="cus-check-before d-il">
+                                    <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                    <label for="custom-value" (click)="customAccountName = !customAccountName; changePaymentMethod()">Use custom account</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="element-box-content d-flex mt-3">
+                                    <button class="mr-2 btn btn-blue" type="submit" [disabled]="!altCoinForm.valid"> Save New Account</button>
+                                    <button class="mr-2 btn btn-blue" (click)="isCreateAccountForm = false; altCoinForm.reset()" type="button"> Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

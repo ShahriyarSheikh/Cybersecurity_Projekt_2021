@@ -1,0 +1,503 @@
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Manage Accounts
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table cusTable cusTableBig" *ngIf="userSavedFiatAccounts.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th>Account Name</th>
+                                        <th>Currency</th>
+                                        <th>Payment Method</th>
+                                        <th>Account Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of userSavedFiatAccounts">
+                                        <td>{{item.accountName}}</td>
+                                        <td>{{item.currency}}</td>
+                                        <td>{{item.paymentMethod}}</td>
+                                        <td>
+                                            <ng-container *ngIf="item.paymentMethod == 'AliPay'">
+                                                {{item.accountNumber}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.paymentMethod == 'Cash App'">
+                                                {{item.cashTag}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.paymentMethod == 'Perfect Money'">
+                                                {{item.accountNumber}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.paymentMethod == 'Venmo'">
+                                                {{item.venmoUsername}}, {{item.accountOwnerFullName}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.paymentMethod == 'Western Union'">
+                                                {{item.countryRegion}}/{{item.country}}, {{item.accountOwnerFullName}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.paymentMethod == 'Cash Deposit'">
+                                                {{item.countryRegion}}/{{item.country}},
+                                                {{item.bankName}}/{{item.accountNumber}}, {{item.accountOwnerFullName}}
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="cus_box content-center" *ngIf="userSavedFiatAccounts.length == 0">
+                                <p>There are no accounts set up yet</p>
+                            </div>
+                        </div>
+                        <div class="element-box-content d-flex">
+                            <button class="mr-2 btn btn-blue" (click)="isCreateAccountForm = true" [disabled]="isCreateAccountForm"
+                                type="button"> Add New Account</button>
+                            <button class="mr-2 btn btn-blue" type="button" (click)="exportAllAccounts()"> Export
+                                Accounts</button>
+                            <button class="btn btn-blue" (click)="fileInput.click()" type="button"> Import Accounts</button>
+
+                            <div class="form-group">
+                                <!-- <label>Choose File</label> -->
+                                <input (change)="importAccount($event)" type="file" style="visibility :  hidden "
+                                    #fileInput>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mb-5" *ngIf="isCreateAccountForm">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Create New Account
+        </h6>
+        <div class="element-wrapper bg">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="select-group">
+                        <label>Payment Method</label>
+                        <select id="select_payment_method" class="form-control select-transparent" [(ngModel)]="addFormName">
+                            <option value="alipay">Alipay</option>
+                            <option value="cash_app">Cash App</option>
+                            <option value="cash_deposite">Cash Deposite</option>
+                            <option value="perfect_money">Perfect Money</option>
+                            <option value="venmo">Venmo</option>
+                            <option value="western_union">Western Union</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div *ngIf="addFormName == 'alipay'">
+                        <form action="" class="mb-5" [formGroup]="alipayAccountForm" (ngSubmit)="aliPayAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Account No.</label>
+                                        <input class="form-control" placeholder="Account No." type="text"
+                                            formControlName="accountNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+
+                                        <select class="form-control"  formControlName="currency">
+                                            <option value="">Currency</option>
+                                            <option *ngFor="let currenc of currencies"
+                                            [value]="currenc">
+                                                {{currenc}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; alipayAccountForm.get('accountName').setValue('AliPay Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button type="submit" class="mr-2 btn btn-blue" [disabled]="!alipayAccountForm.valid">Save
+                                            New Account</button>
+                                        <button (click)="isCreateAccountForm = false; alipayAccountForm.reset()" class="mr-2 btn btn-blue"
+                                            type="button">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="addFormName == 'cash_app'">
+                        <form action="" class="mb-5" [formGroup]="appCashAccountForm" (ngSubmit)="appCashAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> &amp;Cashtag</label>
+                                        <input class="form-control" placeholder="&amp;Cashtag" type="text"
+                                            formControlName="cashTag">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+                                        <select class="form-control"  formControlName="currency">
+                                                <option value="">Currency</option>
+                                                <option *ngFor="let currenc of currencies"
+                                                [value]="currenc">
+                                                    {{currenc}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; appCashAccountForm.get('accountName').setValue('Cash App Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button class="mr-2 btn btn-blue" type="submit" [disabled]="!appCashAccountForm.valid">Save
+                                            New Account</button>
+                                        <button (click)="isCreateAccountForm = false; appCashAccountForm.reset()" class="mr-2 btn btn-blue"
+                                            type="button">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="addFormName == 'venmo'">
+                        <form action="" class="mb-5" [formGroup]="venmoAccountForm" (ngSubmit)="venmoAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Account Owner Full Name</label>
+                                        <input class="form-control" placeholder="Account Owner Full Name" type="text"
+                                            formControlName="accountOwnerFullName">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Venmo Username</label>
+                                        <input class="form-control" placeholder="Venmo Username" type="text"
+                                            formControlName="venmoUsername">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+                                       
+                                        <select class="form-control"  formControlName="currency">
+                                                <option value="">Currency</option>
+                                                <option *ngFor="let currenc of currencies"
+                                                [value]="currenc">
+                                                    {{currenc}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; venmoAccountForm.get('accountName').setValue('Venmo Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button class="mr-2 btn btn-blue" type="submit" [disabled]="!venmoAccountForm.valid">Save
+                                            New Account</button>
+                                        <button (click)="isCreateAccountForm = false; venmoAccountForm.reset()" class="mr-2 btn btn-blue"
+                                            type="button">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="addFormName == 'perfect_money'">
+                        <form action="" class="mb-5" [formGroup]="perfectMoneyAccountForm" (ngSubmit)="perfectMoneyAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Account No.</label>
+                                        <input class="form-control" placeholder="Account No" type="text"
+                                            formControlName="accountNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+                                       
+                                        <select class="form-control"  formControlName="currency">
+                                                <option value="">Currency</option>
+                                                <option *ngFor="let currenc of currencies"
+                                                [value]="currenc">
+                                                    {{currenc}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; perfectMoneyAccountForm.get('accountName').setValue('Perfect Money Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button class="mr-2 btn btn-blue" type="submit" [disabled]="!perfectMoneyAccountForm.valid">Save
+                                            New Account</button>
+                                        <button (click)="isCreateAccountForm = false; perfectMoneyAccountForm.reset()"
+                                            class="mr-2 btn btn-blue" type="button">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="addFormName == 'western_union'">
+                        <form action="" class="mb-5" [formGroup]="westernUnionAccountForm" (ngSubmit)="westernUnionAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Region</label>
+                                                <select class="form-control" (change)="changeRegion(selectedRegion.value)"
+                                                    #selectedRegion formControlName="countryRegion">
+                                                    <option [value]="item" *ngFor="let item of regions">{{item}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Country</label>
+                                                <select class="form-control" formControlName="country">
+                                                    <option [value]="item" *ngFor="let item of country">{{item}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+                                        
+                                        <select class="form-control"  formControlName="currency">
+                                                <option value="">Currency</option>
+                                                <option *ngFor="let currenc of currencies"
+                                                [value]="currenc">
+                                                    {{currenc}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Full Name (First, Middle, Last)</label>
+                                        <input class="form-control" placeholder="Type here..." type="text"
+                                            formControlName="accountOwnerFullName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input class="form-control" placeholder="Type here..." type="text"
+                                            formControlName="city">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control" placeholder="example@gmail.com" type="email"
+                                            formControlName="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; westernUnionAccountForm.get('accountName').setValue('Western Union Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button class="mr-2 btn btn-blue" type="submit" [disabled]="!westernUnionAccountForm.valid">
+                                            Save New Account</button>
+                                        <button (click)="isCreateAccountForm = false; westernUnionAccountForm.reset()"
+                                            class="mr-2 btn btn-blue" type="button"> Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="addFormName == 'cash_deposite'">
+                        <form action="" class="mb-5" [formGroup]="cashDepositeAccountForm" (ngSubmit)="cashDepositeAccountFormsubmission()"
+                            method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Region</label>
+                                                <select class="form-control" (change)="changeRegion(selectedRegion.value)"
+                                                    #selectedRegion formControlName="countryRegion">
+                                                    <option [value]="item" *ngFor="let item of regions">{{item}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Country</label>
+                                                <select class="form-control" formControlName="country">
+                                                    <option [value]="item" *ngFor="let item of country">{{item}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> Currency</label>
+                                        
+                                        <select class="form-control"  formControlName="currency">
+                                                <option value="">Currency</option>
+                                                <option *ngFor="let currenc of currencies"
+                                                [value]="currenc">
+                                                    {{currenc}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account Owner Full Name</label>
+                                        <input class="form-control" placeholder="Account Owner Full Name" type="text"
+                                            formControlName="accountOwnerFullName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control" placeholder="example@gmail.com" type="email"
+                                            formControlName="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input class="form-control" placeholder="Bank Name" type="text" formControlName="bankName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank ID (BIC/SWIFT)</label>
+                                        <input class="form-control" placeholder="Bank ID (BIC/SWIFT)" type="text"
+                                            formControlName="bankId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch No</label>
+                                        <input class="form-control" placeholder="Branch No" type="text" formControlName="BranchNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account No. (IBAN)</label>
+                                        <input class="form-control" placeholder="Account No. (IBAN)" type="text"
+                                            formControlName="accountNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Account Type</label>
+                                        <select class="form-control" formControlName="accountType">
+                                            <option value="Current">Current</option>
+                                            <option value="Saving">Saving</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Extra Requirements</label>
+                                        <input class="form-control" placeholder="Extra Requirements" type="text"
+                                            formControlName="extraRequirements">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-il">
+                                        <label for=""> Account Name</label>
+                                        <input class="form-control" placeholder="Account Name" type="text" [readonly]="!customAccountName"
+                                            formControlName="accountName">
+                                    </div>
+                                    <div class="cus-check-before d-il">
+                                        <input class="styled-checkbox" [checked]="customAccountName" type="checkbox">
+                                        <label for="custom-value" (click)="customAccountName = !customAccountName; cashDepositeAccountForm.get('accountName').setValue('Cash Deposit Account')">Use
+                                            custom account</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="element-box-content d-flex mt-3">
+                                        <button class="mr-2 btn btn-blue" type="submit" [disabled]="!cashDepositeAccountForm.valid">
+                                            Save New Account</button>
+                                        <button (click)="isCreateAccountForm = false; cashDepositeAccountForm.reset()"
+                                            class="mr-2 btn btn-blue" type="button"> Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

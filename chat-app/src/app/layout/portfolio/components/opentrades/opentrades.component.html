@@ -1,0 +1,69 @@
+<h5>Currently Open Trades</h5>
+<div class="mb-5">
+    <div class="element-wrapper bg">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Price</th>
+                        <th>ETH (min-max)</th>
+                        <th>Amount</th>
+                        <th>Payment Methode</th>
+                        <th>Offer Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody style="max-height:35vh;">
+                    <tr *ngFor="let offer of offerDetails; let i = index">
+                        <td>{{offer.fiatQuantity / web3.fromWei(offer.ethQuantity,'ether')}} {{offer.fiatCurrency}}</td>
+                        <td>{{web3.fromWei(offer.ethQuantity,'ether')}} ETH</td>
+                        <td>{{offer.fiatQuantity}} {{offer.fiatCurrency}}</td>
+                        <td>{{offer.paymentMethod}}</td>
+                        <td>{{offer.offerType}}</td>
+                        <td>
+                            <ng-container *ngIf="offer.offerType == 'Sell ETH'">
+                                <a [routerLink]="'/sell/takeoffer/'+offer.tradeHash">Offer Details</a>
+                            </ng-container>
+                            <ng-container *ngIf="offer.offerType == 'Buy ETH'">
+                                <a [routerLink]="'/buy/takeoffer/'+offer.tradeHash">Offer Details</a>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    <tr *ngIf="offerDetails.length == 0">
+                        <td colspan="6">No records found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<h5>Matched Trades Using Matcher</h5>
+<div class="mb-5">
+    <div class="element-wrapper bg">
+        <div class="table-responsive">
+            <table class="table cusTable cusTableBig">
+                <thead>
+                    <tr>
+                        <th>Matched Trade Hash</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody style="max-height:35vh;">
+                    <tr *ngFor="let offer of matchedRequestsResults; let i = index">
+                        <td>{{offer.tradeHash}}</td>
+                        <td>
+                            <ng-container *ngIf="offer.type == 'Buy'">
+                                <a [routerLink]="'/sell/takeoffer/'+offer.tradeHash">Offer Details</a>
+                            </ng-container>
+                            <ng-container *ngIf="offer.type == 'Sell'">
+                                <a [routerLink]="'/buy/takeoffer/'+offer.tradeHash">Offer Details</a>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

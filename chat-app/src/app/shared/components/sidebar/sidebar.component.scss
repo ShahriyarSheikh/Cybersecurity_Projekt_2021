@@ -1,0 +1,27 @@
+:host {
+    display: inherit;
+    @media only screen and (max-width: 767px) {
+        display: block;
+    }
+}
+
+.active {
+    background-color: #242d49;
+    .icon-w {
+        opacity: 1 !important;
+        color: #fff !important;
+    }
+}
+
+a.email {
+    cursor: pointer;
+}
+
+.count {
+    display: block !important;
+    position: absolute;
+    top: -12px;
+    color: yellow;
+    font-size: 18px;
+    right: -3px;
+}

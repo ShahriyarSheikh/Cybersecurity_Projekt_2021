@@ -1,0 +1,214 @@
+<div class="mb-5">
+    <h6 class="element-header">
+        Select Trading Account
+    </h6>
+    <div class="element-wrapper bg">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    <select class="form-control" [(ngModel)]="selectedFiatAccountIndex">
+                        <option *ngFor="let account of userSavedFiatAccounts; let i = index" [value]="i">{{account.accountName}}</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="selectedFiatAccountIndex != undefined">
+                    <label>Currency</label>
+                    <input class="form-control" value="{{userSavedFiatAccounts[selectedFiatAccountIndex].currency}}" type="text" disabled="">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="element-box-content d-flex">
+                    <button class="mr-2 btn btn-blue" (click)="isRequestMatch=true;isRegularOffer=false;" type="button"> Use RequestMatch</button>
+                    <button class="btn btn-blue" (click)="isRegularOffer=true;isRequestMatch=false;" type="button"> Place Regular Offer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isRegularOffer">
+    <form [formGroup]="form" (ngSubmit)="placeOfferInContract()" method="post">
+        <div class="mb-5">
+            <h6 class="element-header">
+                Set Amount And Price
+            </h6>
+            <div class="element-wrapper bg">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="">Amount of ETH to Sell</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Enter amount in ETH" type="text" formControlName="ethQuantity">
+                                <div class="input-group-addon">
+                                    ETH
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="total_price">
+                                <label for="">Amount in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} to Receive</label>
+                                <div class="input-group">
+                                    <input class="form-control" formControlName="fiatQuantity" placeholder="Amount in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} to Recieve"
+                                        type="text">
+                                    <div class="input-group-addon">
+                                        {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="total_price">
+                                <label for="">Price in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} for 1 ETH</label>
+                                <div class="input-group">
+                                    <input class="form-control" value="{{form.value.fiatQuantity / form.value.ethQuantity}}" placeholder="Price in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} for 1 ETH"
+                                        type="number" disabled>
+                                    <div class="input-group-addon">
+                                        {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-5">
+            <h6 class="element-header">
+                Seller's Security Deposit and Arbitrator Address
+            </h6>
+            <div class="element-wrapper bg">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="">Security Deposit for ETH Buyer</label>
+                            <div class="input-group">
+                                <input class="form-control" value="{{form.value.ethQuantity}}" placeholder="Security Deposit in ETH" type="number" disabled>
+                                <div class="input-group-addon">
+                                    ETH
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="box_container">
+                            <div class="form-group shuffle" data-sort="up">
+                                <label>Select Arbitrator</label>
+                                <select formControlName="arbitratorAddress" class="form-control">
+                                    <option *ngFor="let arbitrator of arbitratorList" [value]="arbitrator">{{arbitrator}}</option>
+                                </select>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="element-box-content d-flex">
+                        <button [disabled]="!form.valid" class="mr-2 btn btn-blue" type="submit"> Next Step</button>
+                        <button (click)="clearForm()" class="btn btn-blue" type="button"> Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div *ngIf="isRequestMatch">
+    <form [formGroup]="formForRequestmatch" (ngSubmit)="placeRequestMatchOffer()" method="post">
+        <div class="mb-5">
+            <h6 class="element-header">
+                Set Amount And Price
+            </h6>
+            <div class="element-wrapper bg">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="">Amount of ETH to Sell</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Enter amount in ETH" type="text" formControlName="ethQuantity">
+                                <div class="input-group-addon">
+                                    ETH
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="total_price">
+                                <label for="">Amount in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} to Receive</label>
+                                <div class="input-group">
+                                    <input class="form-control" formControlName="fiatQuantity" placeholder="Amount in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} to Recieve"
+                                        type="text">
+                                    <div class="input-group-addon">
+                                        {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="total_price">
+                                <label for="">Price in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} for 1 ETH</label>
+                                <div class="input-group">
+                                    <input class="form-control" value="{{formForRequestmatch.value.fiatQuantity / formForRequestmatch.value.ethQuantity}}" placeholder="Price in {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}} for 1 ETH"
+                                        type="number" disabled>
+                                    <div class="input-group-addon">
+                                        {{userSavedFiatAccounts[selectedFiatAccountIndex].currency}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-5">
+            <h6 class="element-header">
+                Set Deviation For Trade
+            </h6>
+            <div class="element-wrapper bg">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="">Deviation Allowed For Fiat Quantity</label>
+                            <div class="input-group">
+                                <input class="form-control" max="100" min="0" formControlName="deviationAllowedForFiatQuantityInPercentage" placeholder="Deviation Allowed For Fiat Quantity In Percentage"
+                                    type="text">
+                                <div class="input-group-addon">
+                                    %
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="">Deviation Allowed For ETH Quantity</label>
+                            <div class="input-group">
+                                <input class="form-control" max="100" min="0" formControlName="deviationAllowedForEthQuantityInPercentage" placeholder="Deviation Allowed For ETH Quantity In Percentage"
+                                    type="text">
+                                <div class="input-group-addon">
+                                    %
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="element-box-content d-flex">
+                        <button [disabled]="!formForRequestmatch.valid" class="mr-2 btn btn-blue" type="submit"> Next Step</button>
+                        <button (click)="clearFormForRequestmatch()" class="btn btn-blue" type="button"> Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

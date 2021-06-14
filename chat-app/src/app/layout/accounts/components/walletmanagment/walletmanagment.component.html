@@ -1,0 +1,177 @@
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Wallets
+        </h6>
+        <div class="element-wrapper bg">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table cusTable cusTableBig">
+                                <thead>
+                                    <tr>
+                                        <th>Wallet Name</th>
+                                        <th>Public Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let account of walletDetailsList; let i = index">
+                                        <td>{{account.walletName}}</td>
+                                        <td>{{account.publicAddress}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div class="cus_box content-center">
+                                <p>There are no wallet to show</p>
+                            </div> -->
+                        </div>
+                        <div class="element-box-content d-flex">
+                            <button (click)="showWalletForm = true" class="mr-2 btn btn-blue" type="button"> Add New Wallet</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5" *ngIf="showWalletForm">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Create New Wallet
+        </h6>
+        <div class="element-wrapper bg">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Wallet Name</label>
+                        <input class="form-control" [(ngModel)]="walletName" placeholder="Wallet Name" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Enter Password</label>
+                        <input class="form-control" [(ngModel)]="walletpassword" placeholder="Password" type="password">
+                    </div>
+                </div>
+                <!-- <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" placeholder="Password" type="password">
+                    </div>
+                </div> -->
+                <div class="col-sm-4" > </div>   
+                <div class="col-sm-4">
+                    <button class="mt-2 btn btn-blue" type="button" [disabled]="!walletName || !walletpassword" (click)="generateNewEthWallet()">Create Wallet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Wallet Recovery
+        </h6>
+        <div class="element-wrapper bg">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Select Type</label>
+                        <select class="form-control" [(ngModel)]="walletRecoveryOption">
+                            <option value="privatekey">Private Key</option>
+                            <option value="jsonfile">JSON File</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12" *ngIf="walletRecoveryOption == 'privatekey'">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Paste your private key string here</label>
+                                <input class="form-control" placeholder="Private key" type="text" [(ngModel)]="privateKeyRecoveryValue">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Enter Password</label>
+                                <input class="form-control" placeholder="Password" type="password" [(ngModel)]="privateKeyRecoveryPassword">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Recover as wallet name</label>
+                                <input class="form-control" placeholder="Wallet name" type="text" [(ngModel)]="RecoveryWalletName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button class="mt-2 btn btn-blue" (click)="recoverWalletUsingPrivateKey()" type="button" [disabled] = "!privateKeyRecoveryValue || !privateKeyRecoveryPassword || !RecoveryWalletName">Recover</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12" *ngIf="walletRecoveryOption == 'jsonfile'">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Choose File</label>
+                                <button class="btn btn-blue" (click)="fileInput.click()" type="button" [disabled]= "!RecoveryWalletName"> Import Accounts</button>
+
+                                <input (change)="recoverWalletUsingJSONFile($event)" style=" visibility : hidden " type="file" #fileInput>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Recover as wallet name</label>
+                                <input class="form-control" placeholder="Wallet name" type="text" [(ngModel)]="RecoveryWalletName">
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Enter Password</label>
+                                <input class="form-control" placeholder="Password" type="password">
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-sm-4">
+                            <button class="mt-2 btn btn-blue" type="button">Recover</button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<div class="row mb-5">
+    <div class="col-sm-12">
+        <h6 class="element-header">
+            Set Password Protection for Wallet
+        </h6>
+        <div class="element-wrapper bg">
+            <p>With password protection you need to enter your password when withdrawing bitcoin out of your wallet or if you
+                want to view or restore a wallet from seed words as well as at application startup</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Enter Password</label>
+                        <input class="form-control" placeholder="Password" type="password">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input class="form-control" placeholder="Password" type="password">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button class="mt-2 btn btn-blue" type="button">Set Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
